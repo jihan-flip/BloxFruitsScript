@@ -16,7 +16,7 @@ frame.Parent = screenGui
 -- Auto Fruit Button
 local fruitBtn = Instance.new("TextButton")
 fruitBtn.Size = UDim2.new(1, 0, 0.5, 0)
-fruitBtn.Text = "Auto Get Fruit (OFF)"
+fruitBtn.Text = "This is made by jihan (click for auto fruit)"
 fruitBtn.BackgroundColor3 = Color3.fromRGB(255, 85, 85)
 fruitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 fruitBtn.Font = Enum.Font.SourceSansBold
