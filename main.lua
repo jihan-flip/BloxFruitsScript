@@ -6,8 +6,8 @@ screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 -- Frame
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 300, 0, 80)  -- Adjusted size to fit only the Auto Fruit button
-frame.Position = UDim2.new(0.5, -150, 0.5, -40)  -- Adjusted position to center it properly
+frame.Size = UDim2.new(0, 300, 0, 160)
+frame.Position = UDim2.new(0.5, -150, 0.5, -80)
 frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 frame.Active = true
 frame.Draggable = true
@@ -15,7 +15,7 @@ frame.Parent = screenGui
 
 -- Auto Fruit Button
 local fruitBtn = Instance.new("TextButton")
-fruitBtn.Size = UDim2.new(1, 0, 1, 0)  -- Make the button fill the frame
+fruitBtn.Size = UDim2.new(1, 0, 0.5, 0)
 fruitBtn.Text = "Auto Get Fruit (OFF)"
 fruitBtn.BackgroundColor3 = Color3.fromRGB(255, 85, 85)
 fruitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
