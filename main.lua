@@ -69,7 +69,6 @@ espBtn.MouseButton1Click:Connect(function()
 					local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - character.HumanoidRootPart.Position).magnitude
 					local textLabel = Instance.new("TextLabel")
 					textLabel.Size = UDim2.new(0, 100, 0, 30)
-					textLabel.Position = UDim2.new(0.5, 0, 0, 0) -- Position above player
 					textLabel.Text = player.Name .. " (" .. math.round(distance) .. "m)"
 					textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 					textLabel.BackgroundTransparency = 1
@@ -78,11 +77,13 @@ espBtn.MouseButton1Click:Connect(function()
 					textLabel.Parent = screenGui
 
 					-- Update label position with player
-					local playerPosition = character.HumanoidRootPart.Position
 					game:GetService("RunService").RenderStepped:Connect(function()
+						local playerPosition = character.HumanoidRootPart.Position
 						local screenPosition, onScreen = game:GetService("Workspace"):WorldToViewportPoint(playerPosition)
 						if onScreen then
-							textLabel.Position = UDim2.new(0, screenPosition.X, 0, screenPosition.Y - 50) -- Adjust position
+							textLabel.Position = UDim2.new(0, screenPosition.X - 50, 0, screenPosition.Y - 100) -- Adjust position above player
+						else
+							textLabel.Visible = false -- Hide the label if it's off-screen
 						end
 					end)
 				end
