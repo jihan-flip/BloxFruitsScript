@@ -66,13 +66,21 @@ chestBtn.MouseButton1Click:Connect(function()
             for _, chest in pairs(game.Workspace:GetDescendants()) do
                 if chest:IsA("Model") and chest:FindFirstChild("TouchInterest") then
                     -- Move to chest
-                    pcall(function()
-                        game.Players.LocalPlayer.Character:MoveTo(chest.Position or chest:GetModelCFrame().p)
-                        wait(0.5)
-                    end)
+                    local chestPosition = chest:FindFirstChild("PrimaryPart") and chest.PrimaryPart.Position or chest:GetModelCFrame().p
+                    game.Players.LocalPlayer.Character:MoveTo(chestPosition)
+                    wait(0.5)
+
+                    -- Simulate chest collection (for example, trigger the chest's touch event)
+                    local touch = chest:FindFirstChild("TouchInterest")
+                    if touch then
+                        -- This simulates the interaction. In case there is an actual touch event needed, we'd trigger it.
+                        -- For example, we can use the Touch event here if the chest requires it.
+                        -- chest:Touch(game.Players.LocalPlayer.Character)
+                    end
+                    break  -- Stop after interacting with one chest
                 end
             end
-            wait(2)
+            wait(2)  -- Check every 2 seconds
         end
     end)()
 end)
