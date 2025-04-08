@@ -23,22 +23,28 @@ fruitBtn.Font = Enum.Font.SourceSansBold
 fruitBtn.TextSize = 18
 fruitBtn.Parent = frame
 
--- Auto Chest Button
-local chestBtn = Instance.new("TextButton")
-chestBtn.Position = UDim2.new(0, 0, 0.5, 0)  -- Adjust position so it's below the fruit button
-chestBtn.Size = UDim2.new(1, 0, 0.5, 0)
-chestBtn.Text = "Auto Chest (OFF)"
-chestBtn.BackgroundColor3 = Color3.fromRGB(255, 85, 85)
-chestBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-chestBtn.Font = Enum.Font.SourceSansBold
-chestBtn.TextSize = 18
-chestBtn.Parent = frame
-
--- Logic
+-- Logic for Auto Fruit
 local autoFruit = false
-local autoChest = false
 
--- Draggable GUI
+fruitBtn.MouseButton1Click:Connect(function()
+	autoFruit = not autoFruit
+	fruitBtn.Text = "Auto Get Fruit (" .. (autoFruit and "ON" or "OFF") .. ")"
+	fruitBtn.BackgroundColor3 = autoFruit and Color3.fromRGB(85, 255, 85) or Color3.fromRGB(255, 85, 85)
+
+	coroutine.wrap(function()
+		while autoFruit do
+			for _, obj in pairs(game.Workspace:GetDescendants()) do
+				if obj:IsA("Tool") and obj:FindFirstChild("Handle") and obj.Name:lower():find("fruit") then
+					game.Players.LocalPlayer.Character:MoveTo(obj.Handle.Position)
+					break
+				end
+			end
+			wait(1)
+		end
+	end)()
+end)
+
+-- Draggable functionality for the GUI
 local dragging = false
 local dragInput, dragStart, startPos
 
@@ -64,51 +70,4 @@ frame.InputEnded:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseButton1 then
 		dragging = false
 	end
-end)
-
-fruitBtn.MouseButton1Click:Connect(function()
-	autoFruit = not autoFruit
-	fruitBtn.Text = "Auto Get Fruit (" .. (autoFruit and "ON" or "OFF") .. ")"
-	fruitBtn.BackgroundColor3 = autoFruit and Color3.fromRGB(85, 255, 85) or Color3.fromRGB(255, 85, 85)
-
-	coroutine.wrap(function()
-		while autoFruit do
-			for _, obj in pairs(game.Workspace:GetDescendants()) do
-				if obj:IsA("Tool") and obj:FindFirstChild("Handle") and obj.Name:lower():find("fruit") then
-					game.Players.LocalPlayer.Character:MoveTo(obj.Handle.Position)
-					break
-				end
-			end
-			wait(1)
-		end
-	end)()
-end)
-
-chestBtn.MouseButton1Click:Connect(function()
-	autoChest = not autoChest
-	chestBtn.Text = "Auto Chest (" .. (autoChest and "ON" or "OFF") .. ")"
-	chestBtn.BackgroundColor3 = autoChest and Color3.fromRGB(85, 255, 85) or Color3.fromRGB(255, 85, 85)
-
-	coroutine.wrap(function()
-		while autoChest do
-			for _, chest in pairs(game.Workspace:GetDescendants()) do
-				if chest:IsA("Model") and chest:FindFirstChild("TouchInterest") then
-					-- Move to chest
-					local chestPosition = chest:FindFirstChild("PrimaryPart") and chest.PrimaryPart.Position or chest:GetModelCFrame().p
-					game.Players.LocalPlayer.Character:MoveTo(chestPosition)
-					wait(0.5)
-
-					-- Simulate chest collection (for example, trigger the chest's touch event)
-					local touch = chest:FindFirstChild("TouchInterest")
-					if touch then
-						-- This simulates the interaction. In case there is an actual touch event needed, we'd trigger it.
-						-- For example, we can use the Touch event here if the chest requires it.
-						-- chest:Touch(game.Players.LocalPlayer.Character)
-					end
-					break  -- Stop after interacting with one chest
-				end
-			end
-			wait(2)  -- Check every 2 seconds
-		end
-	end)()
 end)
