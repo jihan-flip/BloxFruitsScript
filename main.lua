@@ -10,8 +10,15 @@ frame.Size = UDim2.new(0, 300, 0, 160)
 frame.Position = UDim2.new(0.5, -150, 0.5, -80)
 frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 frame.Active = true
-frame.Draggable = true
+frame.Draggable = false -- We'll handle dragging ourselves
 frame.Parent = screenGui
+
+-- Draggable Handle (black bar below)
+local dragBar = Instance.new("Frame")
+dragBar.Size = UDim2.new(1, 0, 0, 20)
+dragBar.Position = UDim2.new(0, 0, 1, 0)
+dragBar.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+dragBar.Parent = frame
 
 -- Auto Fruit Button
 local fruitBtn = Instance.new("TextButton")
@@ -87,7 +94,6 @@ local function createESPForPlayer(player)
 		label = nameTag,
 	}
 
-	-- Update distance every frame
 	game:GetService("RunService").RenderStepped:Connect(function()
 		if not espEnabled or not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") then return end
 		local myHRP = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
@@ -115,7 +121,6 @@ espBtn.MouseButton1Click:Connect(function()
 			createESPForPlayer(player)
 		end
 
-		-- ESP for players who join later
 		game.Players.PlayerAdded:Connect(function(player)
 			player.CharacterAdded:Connect(function()
 				wait(1)
@@ -129,7 +134,7 @@ espBtn.MouseButton1Click:Connect(function()
 	end
 end)
 
--- Draggable GUI
+-- Dragging Logic (handle dragBar)
 local dragging = false
 local dragInput, dragStart, startPos
 
@@ -138,7 +143,7 @@ local function updateDrag(input)
 	frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
 
-frame.InputBegan:Connect(function(input)
+dragBar.InputBegan:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseButton1 then
 		dragging = true
 		dragStart = input.Position
@@ -151,7 +156,7 @@ frame.InputBegan:Connect(function(input)
 	end
 end)
 
-frame.InputEnded:Connect(function(input)
+dragBar.InputEnded:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseButton1 then
 		dragging = false
 	end
