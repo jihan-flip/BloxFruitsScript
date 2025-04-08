@@ -1,4 +1,4 @@
--- Create GUI
+--- Create GUI
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "FruitChestGUI"
 screenGui.ResetOnSpawn = false
