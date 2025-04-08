@@ -77,12 +77,12 @@ espBtn.MouseButton1Click:Connect(function()
 					textLabel.TextSize = 18
 					textLabel.Parent = screenGui
 
-					-- Follow the player position
+					-- Update label position with player
 					local playerPosition = character.HumanoidRootPart.Position
 					game:GetService("RunService").RenderStepped:Connect(function()
 						local screenPosition, onScreen = game:GetService("Workspace"):WorldToViewportPoint(playerPosition)
 						if onScreen then
-							textLabel.Position = UDim2.new(0, screenPosition.X, 0, screenPosition.Y)
+							textLabel.Position = UDim2.new(0, screenPosition.X, 0, screenPosition.Y - 50) -- Adjust position
 						end
 					end)
 				end
