@@ -16,7 +16,7 @@ frame.Parent = screenGui
 -- Auto Fruit Button
 local fruitBtn = Instance.new("TextButton")
 fruitBtn.Size = UDim2.new(1, 0, 0.5, 0)
-fruitBtn.Text = "Hey Ayaa, This is made by jihan (click for auto fruit)"
+fruitBtn.Text = "Auto Devil Fruit (OFF)"
 fruitBtn.BackgroundColor3 = Color3.fromRGB(255, 85, 85)
 fruitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 fruitBtn.Font = Enum.Font.SourceSansBold
@@ -28,7 +28,7 @@ local autoFruit = false
 
 fruitBtn.MouseButton1Click:Connect(function()
 	autoFruit = not autoFruit
-	fruitBtn.Text = "Auto Get Fruit (" .. (autoFruit and "ON" or "OFF") .. ")"
+	fruitBtn.Text = "Auto Devil Fruit (" .. (autoFruit and "ON" or "OFF") .. ")"
 	fruitBtn.BackgroundColor3 = autoFruit and Color3.fromRGB(85, 255, 85) or Color3.fromRGB(255, 85, 85)
 
 	coroutine.wrap(function()
