@@ -103,7 +103,11 @@ local function createESPForPlayer(player)
 			local myHRP = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
 			if myHRP then
 				local dist = (myHRP.Position - player.Character.HumanoidRootPart.Position).Magnitude
-				nameTag.Text = player.Name .. " (" .. math.floor(dist) .. "m)"
+				local level = "?"
+				if player:FindFirstChild("leaderstats") and player.leaderstats:FindFirstChild("Level") then
+					level = player.leaderstats.Level.Value
+				end
+				nameTag.Text = player.Name .. " (Level " .. tostring(level) .. " | " .. math.floor(dist) .. "m)"
 			end
 		end)
 	end
